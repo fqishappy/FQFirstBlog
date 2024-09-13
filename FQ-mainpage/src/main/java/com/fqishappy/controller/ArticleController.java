@@ -4,10 +4,7 @@ import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Article;
 import com.fqishappy.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,8 +44,16 @@ public class ArticleController {
     @GetMapping("/articleList")
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
         return articleService.articleList(pageNum,pageSize,categoryId);
+    }
 
-
-
+    /**
+     * 根据文章id查询内容
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseResult getArticleDetail(@PathVariable Long id) {
+        System.out.println(id);
+        return articleService.getArticleDetail(id);
     }
 }

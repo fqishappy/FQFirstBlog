@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Article;
+import com.fqishappy.domain.entity.Category;
+import com.fqishappy.domain.vo.ArticleDetailVO;
 import com.fqishappy.domain.vo.ArticleListVO;
 import com.fqishappy.domain.vo.HotArticleVO;
 import com.fqishappy.domain.vo.PageVO;
@@ -31,6 +33,8 @@ import java.util.stream.Collectors;
 @Transactional(rollbackFor = Exception.class)
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @Autowired
     private CategoryService categoryService;
@@ -102,5 +106,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return ResponseResult.okResult(new PageVO(articleListVOS, articlePage.getTotal()));
 
 
+    }
+
+    /**
+     * 根据id查询文章内容
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseResult getArticleDetail(Long id) {
+        Article article = getById(id);
+        System.out.println("1:"+article);
+        ArticleDetailVO articleDetailVO = BeanCopyUtils.copyBean(article, ArticleDetailVO.class);
+        System.out.println("2:"+articleDetailVO);
+        Category category = categoryService.getById(articleDetailVO.getCategoryId());
+        if (category != null) {
+            articleDetailVO.setCategoryName(category.getName());
+        }
+        return ResponseResult.okResult(articleDetailVO);
     }
 }
