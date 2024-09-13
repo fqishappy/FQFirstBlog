@@ -6,16 +6,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Article;
+import com.fqishappy.domain.vo.ArticleListVO;
 import com.fqishappy.domain.vo.HotArticleVO;
+import com.fqishappy.domain.vo.PageVO;
 import com.fqishappy.mapper.ArticleMapper;
 import com.fqishappy.service.ArticleService;
+import com.fqishappy.service.CategoryService;
 import com.fqishappy.utils.BeanCopyUtils;
-import lombok.val;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author fqishappy
@@ -23,7 +28,17 @@ import java.util.List;
  */
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
+
+
+    @Autowired
+    private CategoryService categoryService;
+
+    /**
+     * 查询热门文章列表
+     * @return
+     */
     @Override
     public ResponseResult hotArticleList() {
         //查询热门文章 封装ResponseResult返回
@@ -47,5 +62,45 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }*/
         List<HotArticleVO> ts = BeanCopyUtils.copyBeanList(articleList, HotArticleVO.class);
         return ResponseResult.okResult(articleList);
+    }
+
+    /**
+     * 查询文章列表
+     * @param pageNum 页码
+     * @param pageSize 每页查询数量
+     * @param categoryId 文章分类id
+     * @return
+     */
+    @Override
+    public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        //查询条件
+        LambdaQueryWrapper<Article> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        //如果有categoryId，查询时要和传入的相同
+        lambdaQueryWrapper.eq(Objects.nonNull(categoryId) && categoryId > 0, Article::getCategoryId, categoryId);
+        //是否正式发布
+        lambdaQueryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL);
+        //对isTop进行降序
+        lambdaQueryWrapper.orderByDesc(Article::getIsTop);
+        //分页查询
+        Page<Article> articlePage = new Page(pageNum, pageSize);
+        page(articlePage, lambdaQueryWrapper);
+        //查询categoryName
+        List<Article> articles = articlePage.getRecords();
+        //articleid查询name
+        /*for (Article article : records) {
+            Category byId = categoryService.getById(article.getCategoryId());
+            article.setCategoryName(byId.getName());
+        }*/
+
+        //由article对象获取分类id，再由id查询分类表中的name
+        articles.forEach(article ->
+                article.setCategoryName(
+                        categoryService.getById(article.getCategoryId()).getName())
+        );
+        //封装查询结果
+        List<ArticleListVO> articleListVOS = BeanCopyUtils.copyBeanList(articles, ArticleListVO.class);
+        return ResponseResult.okResult(new PageVO(articleListVOS, articlePage.getTotal()));
+
+
     }
 }

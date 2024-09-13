@@ -6,6 +6,7 @@ import com.fqishappy.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,11 +28,27 @@ public class ArticleController {
         return articleService.list();
     }*/
 
+    /**
+     * 获取热门文章列表
+     * @return
+     */
     @GetMapping("/hotArticleList")
     public ResponseResult hosArticleList() {
         //查询热门文章 封装成ResponseResult返回
         ResponseResult responseResult = articleService.hotArticleList();
         System.out.println(responseResult);
         return responseResult;
+    }
+
+    /**
+     * 获取文章列表
+     * @return
+     */
+    @GetMapping("/articleList")
+    public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        return articleService.articleList(pageNum,pageSize,categoryId);
+
+
+
     }
 }

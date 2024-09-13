@@ -18,8 +18,13 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 获取文章分类列表
+     * @return
+     */
     @GetMapping("getCategoryList")
     public ResponseResult getCategoryList(){
         return categoryService.getCategoryList();
     }
+
 }

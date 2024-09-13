@@ -13,6 +13,7 @@ import com.fqishappy.service.CategoryService;
 import com.fqishappy.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -25,10 +26,8 @@ import java.util.stream.Collectors;
  * @since 2024-09-13 09:31:32
  */
 @Service("categoryService")
+@Transactional(rollbackFor = Exception.class)
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
-
-    @Autowired
-    private CategoryMapper categoryMapper;
 
     @Autowired
     private ArticleService articleService;
