@@ -1,7 +1,9 @@
 package com.fqishappy.utils;
 
-import lombok.val;
 import org.springframework.beans.BeanUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author fqishappy
@@ -19,5 +21,11 @@ public class BeanCopyUtils {
             e.printStackTrace();
         }
         return target;
+    }
+
+    public static <V,T> List<T> copyBeanList(List<V> list,Class<T> clazz ) {
+        return list.stream()
+                .map(o -> copyBean(o, clazz))
+                .collect(Collectors.toList());
     }
 }
