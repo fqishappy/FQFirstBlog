@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.vo.LinkVO;
-import com.fqishappy.entity.Link;
+import com.fqishappy.domain.entity.Link;
 import com.fqishappy.mapper.LinkMapper;
 import com.fqishappy.service.LinkService;
 import com.fqishappy.utils.BeanCopyUtils;

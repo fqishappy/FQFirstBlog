@@ -1,6 +1,6 @@
 package com.fqishappy.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fqishappy.entity.Link;
+import com.fqishappy.domain.entity.Link;
 
 /**
  * 友链(Link)表数据库访问层

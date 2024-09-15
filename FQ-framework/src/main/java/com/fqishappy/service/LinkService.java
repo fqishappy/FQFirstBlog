@@ -2,7 +2,7 @@ package com.fqishappy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fqishappy.domain.ResponseResult;
-import com.fqishappy.entity.Link;
+import com.fqishappy.domain.entity.Link;
 
 /**
  * 友链(Link)表服务接口
