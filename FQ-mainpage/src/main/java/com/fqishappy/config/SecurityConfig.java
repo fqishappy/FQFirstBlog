@@ -30,19 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //关闭csrf
-                .csrf().disable()
-                //不通过Session获取SecurityContext
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .csrf().disable() // 关闭 csrf
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 设置为无状态
                 .and()
                 .authorizeRequests()
-                // 对于登录接口 允许匿名访问
-                .antMatchers("/login").anonymous()
-                // 除上面外的所有请求全部不需要认证即可访问
-                .anyRequest().permitAll();
-        http.logout().disable(); //允许跨域
-        http.cors();
+                .antMatchers("/login").permitAll() // 允许匿名访问登录接口
+                .anyRequest().authenticated(); // 其他请求需要认证
+        http.logout().disable(); // 禁用默认的登出行为
+        http.cors(); // 启用跨域
     }
 }
-
-

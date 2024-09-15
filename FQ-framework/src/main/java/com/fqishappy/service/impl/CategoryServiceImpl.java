@@ -30,7 +30,9 @@ import java.util.stream.Collectors;
 @Transactional(rollbackFor = Exception.class)
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
+
     @Autowired
+    @Lazy
     private ArticleService articleService;
 
     @Override
