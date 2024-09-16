@@ -14,4 +14,10 @@ public interface BlogLoginService {
      * @return
      */
     ResponseResult login(User user);
+
+    /**
+     * 登出
+     * @return
+     */
+    ResponseResult logout();
 }

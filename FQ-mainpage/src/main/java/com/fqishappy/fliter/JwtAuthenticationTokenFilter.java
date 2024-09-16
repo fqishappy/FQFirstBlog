@@ -55,7 +55,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         String userId = claims.getSubject();
         //从redis中获取用户信息
-        LoginUser loginUser = redisCache.getCacheObject("bloglogin" + userId);
+        LoginUser loginUser = redisCache.getCacheObject("bloglogin:" + userId);
         //如果无法获取
         if (Objects.isNull(loginUser)) {
             ResponseResult responseResult =

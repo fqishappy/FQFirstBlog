@@ -9,6 +9,8 @@ import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import java.io.IOException;
  * @author fqishappy
  * @date 2024/9/16 13:20
  */
+@Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
@@ -26,7 +29,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         if (authException instanceof BadCredentialsException) {
             result = ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR.getCode(), authException.getMessage());
         } else if (authException instanceof InsufficientAuthenticationException) {
-            result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN.getCode(), authException.getMessage());
+            result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
         } else {
             result = ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR.getCode(), "认证或授权失败");
         }

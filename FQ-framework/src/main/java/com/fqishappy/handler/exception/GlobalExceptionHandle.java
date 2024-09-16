@@ -23,9 +23,9 @@ public class GlobalExceptionHandle {
         return ResponseResult.errorResult(e.getCode(),e.getMsg());
     }
     @ExceptionHandler(Exception.class)
-    public ResponseResult exceptionHandler(SystemException e) {
+    public ResponseResult exceptionHandler(Exception e) {
         //打印异常信息
-        log.error("出现异常：{}", e.getMsg());
+        log.error("出现异常：{}", e.getMessage());
         return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR.getCode(),e.getMessage());
     }
 }
