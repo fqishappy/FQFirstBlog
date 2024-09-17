@@ -39,7 +39,7 @@ public class BlogLoginController {
     }
 
     /**
-     * 登出
+     * 登出接口
      * @return
      */
     @PostMapping("/logout")
