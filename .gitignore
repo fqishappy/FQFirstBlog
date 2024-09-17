@@ -5,8 +5,6 @@ target/
 
 src/main/resources/application-dev.yml
 
-.yml
-
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
