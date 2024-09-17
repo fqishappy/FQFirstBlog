@@ -12,5 +12,5 @@ spring:
   alioss:
     bucket-name: fq-blog-oss
     endpoint: oss-cn-hangzhou.aliyuncs.com
-    access-key-id:
-    access-key-secret:
+    access-key-id: LTAI5t86ZgvQBXoSp8tPEUQS
+    access-key-secret: TcMUzG9VaEA3SWSQh9dfGs6rMBbJI4
