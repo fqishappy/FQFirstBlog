@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 
 application-dev.yml
+.yml
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

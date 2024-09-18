@@ -53,7 +53,16 @@ public class ArticleController {
      */
     @GetMapping("/{id}")
     public ResponseResult getArticleDetail(@PathVariable Long id) {
-        System.out.println(id);
         return articleService.getArticleDetail(id);
+    }
+
+    /**
+     * 更新redis中的浏览量
+     * @param id
+     * @return
+     */
+    @PutMapping("/updateViewCount/{id}")
+    public ResponseResult updateViewCount(@PathVariable Long id) {
+        return articleService.updateViewCount(id);
     }
 }

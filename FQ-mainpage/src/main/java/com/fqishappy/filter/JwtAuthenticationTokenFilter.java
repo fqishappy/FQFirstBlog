@@ -1,4 +1,4 @@
-package com.fqishappy.fliter;
+package com.fqishappy.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.fqishappy.domain.ResponseResult;

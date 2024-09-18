@@ -23,4 +23,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     ResponseResult updateUserInfo(User user);
+
+    /**
+     * 注册功能实现
+     * @param user
+     * @return
+     */
+    ResponseResult register(User user);
 }

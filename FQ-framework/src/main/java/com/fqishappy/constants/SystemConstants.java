@@ -22,4 +22,9 @@ public class SystemConstants {
     public static final Integer UPLOAD_FAILED = 500;
     public static final Integer FILE_NAME_NULL = 500;
     public static final Integer FILETYPE_ERROR = 500;
+
+
+    public static final String ARTICLE_VIEW_COUNT = "article:ViewCount";
+
+
 }

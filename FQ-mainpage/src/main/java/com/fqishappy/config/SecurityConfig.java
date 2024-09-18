@@ -1,6 +1,6 @@
 package com.fqishappy.config;
 
-import com.fqishappy.fliter.JwtAuthenticationTokenFilter;
+import com.fqishappy.filter.JwtAuthenticationTokenFilter;
 import com.fqishappy.handler.security.AccessDeniedHandlerImpl;
 import com.fqishappy.handler.security.AuthenticationEntryPointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * @author fqishappy
  * @date 2024/9/13 19:54
+ * SpringSecurity配置类
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
