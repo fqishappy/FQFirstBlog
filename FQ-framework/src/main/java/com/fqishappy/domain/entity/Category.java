@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor 
-@TableName("sg_category")
+@TableName("fq_category")
 public class Category {
     @TableId
     private Long id;

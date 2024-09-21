@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor 
-@TableName("sg_comment")
+@TableName("fq_comment")
 public class Comment {
     @TableId
     private Long id;

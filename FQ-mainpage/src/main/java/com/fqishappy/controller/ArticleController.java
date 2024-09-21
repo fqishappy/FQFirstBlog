@@ -32,6 +32,7 @@ public class ArticleController {
     @GetMapping("/hotArticleList")
     public ResponseResult hosArticleList() {
         //查询热门文章 封装成ResponseResult返回
+
         return articleService.hotArticleList();
     }
 

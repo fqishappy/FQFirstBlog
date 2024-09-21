@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author fqishappy
  * @date 2024/9/21 17:02
  */
-@TableName(value="sg_article_tag")
+@TableName(value="fq_article_tag")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

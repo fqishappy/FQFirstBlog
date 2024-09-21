@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sg_tag")
+@TableName("fq_tag")
 public class Tag  {
     @TableId
     private Long id;

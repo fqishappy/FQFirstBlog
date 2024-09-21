@@ -80,9 +80,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             BeanUtils.copyProperties(article, hotArticleVO);
             hotArticleVOList.add(hotArticleVO);
         }*/
-        List<HotArticleVO> list = BeanCopyUtils.copyBeanList(articleList, HotArticleVO.class);
+        List<HotArticleVO> ts = BeanCopyUtils.copyBeanList(articleList, HotArticleVO.class);
 
-        return ResponseResult.okResult(list);
+        return ResponseResult.okResult(articleList);
     }
 
     /**
