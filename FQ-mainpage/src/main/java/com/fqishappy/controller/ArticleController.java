@@ -32,9 +32,7 @@ public class ArticleController {
     @GetMapping("/hotArticleList")
     public ResponseResult hosArticleList() {
         //查询热门文章 封装成ResponseResult返回
-        ResponseResult responseResult = articleService.hotArticleList();
-        System.out.println(responseResult);
-        return responseResult;
+        return articleService.hotArticleList();
     }
 
     /**
@@ -43,7 +41,7 @@ public class ArticleController {
      */
     @GetMapping("/articleList")
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
-        return articleService.articleList(pageNum,pageSize,categoryId);
+        return articleService.articleList(pageNum, pageSize, categoryId);
     }
 
     /**

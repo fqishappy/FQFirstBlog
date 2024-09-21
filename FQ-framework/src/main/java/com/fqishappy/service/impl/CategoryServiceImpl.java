@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,5 +55,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
         return ResponseResult.okResult(categoryVOs);
 
+    }
+
+    @Override
+    public List<CategoryVO> listAllCategory() {
+        LambdaQueryWrapper<Category> categoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        categoryLambdaQueryWrapper.eq(Category::getStatus, SystemConstants.NORMAL);
+        List<Category> list = list(categoryLambdaQueryWrapper);
+        return BeanCopyUtils.copyBeanList(list, CategoryVO.class);
     }
 }

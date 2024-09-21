@@ -35,4 +35,6 @@ public class SystemConstants {
      */
     public static final String TYPE_BUTTON = "F";
 
+    public static final String NORMAL = "0";
+
 }

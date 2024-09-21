@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.AddArticleDto;
 import com.fqishappy.domain.entity.Article;
+import com.fqishappy.domain.entity.ArticleTag;
 import com.fqishappy.domain.entity.Category;
 import com.fqishappy.domain.vo.ArticleDetailVO;
 import com.fqishappy.domain.vo.ArticleListVO;
@@ -13,6 +15,7 @@ import com.fqishappy.domain.vo.HotArticleVO;
 import com.fqishappy.domain.vo.PageVO;
 import com.fqishappy.mapper.ArticleMapper;
 import com.fqishappy.service.ArticleService;
+import com.fqishappy.service.ArticleTagService;
 import com.fqishappy.service.CategoryService;
 import com.fqishappy.utils.BeanCopyUtils;
 
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author fqishappy
@@ -40,9 +44,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     @Lazy
     private CategoryService categoryService;
+
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private ArticleTagService articleTagService;
     /**
      * 查询热门文章列表
      * @return
@@ -73,8 +80,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             BeanUtils.copyProperties(article, hotArticleVO);
             hotArticleVOList.add(hotArticleVO);
         }*/
-        List<HotArticleVO> ts = BeanCopyUtils.copyBeanList(articleList, HotArticleVO.class);
-        return ResponseResult.okResult(articleList);
+        List<HotArticleVO> list = BeanCopyUtils.copyBeanList(articleList, HotArticleVO.class);
+
+        return ResponseResult.okResult(list);
     }
 
     /**
@@ -153,5 +161,35 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         redisCache.incrementCacheMapValue(SystemConstants.ARTICLE_VIEW_COUNT, id.toString(), 1);
         return ResponseResult.okResult();
 
+    }
+
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseResult delete(Long id) {
+        return null;
+    }
+
+    /**
+     * 添加文章
+     * @param articleDto
+     * @return
+     */
+
+    @Override
+    @Transactional
+    public ResponseResult add(AddArticleDto articleDto) {
+        //添加 博客
+        Article article = BeanCopyUtils.copyBean(articleDto, Article.class);
+        save(article);
+        List<ArticleTag> articleTags = articleDto.getTags().stream()
+                .map(tagId -> new ArticleTag(article.getId(), tagId))
+                .collect(Collectors.toList());
+        //添加 博客和标签的关联
+        articleTagService.saveBatch(articleTags);
+        return ResponseResult.okResult();
     }
 }

@@ -17,6 +17,11 @@ spring:
     password: 123456
     database: 1
     port: 6379
+  alioss:
+    bucket-name: fq-blog-oss
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id:
+    access-key-secret:
 mybatis-plus:
   configuration:
     # 日志
