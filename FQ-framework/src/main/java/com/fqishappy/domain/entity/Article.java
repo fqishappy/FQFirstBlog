@@ -20,7 +20,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@TableName("fq_article")
+@TableName("sg_article")
 public class Article {
 
     @TableId

@@ -25,6 +25,14 @@ public class SystemConstants {
 
 
     public static final String ARTICLE_VIEW_COUNT = "article:ViewCount";
+    /**
+     * 权限类型，菜单
+     */
+    public static final String TYPE_MENU = "C";
 
+    /**
+     * 权限类型，按钮
+     */
+    public static final String TYPE_BUTTON = "F";
 
 }

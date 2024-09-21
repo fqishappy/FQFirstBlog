@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor 
-@TableName("fq_link")
+@TableName("sg_link")
 public class Link {
     @TableId
     private Long id;
