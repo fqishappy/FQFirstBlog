@@ -3,12 +3,17 @@ package com.fqishappy.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
+import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Menu;
+import com.fqishappy.domain.vo.MenuVO;
 import com.fqishappy.mapper.MenuMapper;
 import com.fqishappy.service.MenuService;
+import com.fqishappy.utils.BeanCopyUtils;
+import com.fqishappy.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +25,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+
+    private final MenuMapper menuMapper;
+
+    public MenuServiceImpl(MenuMapper menuMapper) {
+        this.menuMapper = menuMapper;
+    }
 
     /**
      * 根据id查询用户权限关键字
@@ -75,6 +86,29 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return menuTree;
     }
 
+    /**
+     * 获取所有菜单
+     * @param status
+     * @param menuName
+     * @return
+     */
+    @Override
+    public ResponseResult getAllMenu(Integer status, String menuName) {
+        return ResponseResult.okResult(list());
+    }
+
+    /**
+     * 逻辑删除菜单
+     * @param menuId
+     * @return
+     */
+    @Override
+    public ResponseResult deleteMenu(Long menuId) {
+        menuMapper.deleteMenu(menuId);
+        return ResponseResult.okResult();
+    }
+
+
     //用于把List集合里面的数据构建成tree，也就是子父菜单树，有层级关系
     private List<Menu> buildMenuTree(List<Menu> menus, long parentId) {
         return menus.stream()
@@ -97,5 +131,17 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 //如果有三层菜单的话，也就是子菜单的子菜单，我们就用下面那行递归(自己调用自己)来处理
                 .map(m -> m.setChildren(getChildren(m,menus)))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 删除菜单-判断是否存在子菜单
+     * @param menuId
+     * @return
+     */
+    @Override
+    public boolean hasChild(Long menuId) {
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Menu::getParentId,menuId);
+        return count(queryWrapper) != 0;
     }
 }

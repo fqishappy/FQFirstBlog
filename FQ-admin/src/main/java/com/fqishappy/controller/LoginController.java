@@ -89,6 +89,10 @@ public class LoginController {
         return ResponseResult.okResult(new RoutersVO(menus));
     }
 
+    /**
+     * 登出接口
+     * @return
+     */
     @PostMapping("/user/logout")
     public ResponseResult logout() {
         return systemLoginService.logout();

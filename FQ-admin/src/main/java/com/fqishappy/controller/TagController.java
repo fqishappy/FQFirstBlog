@@ -6,6 +6,8 @@ import com.fqishappy.domain.vo.TagAddVO;
 import com.fqishappy.domain.vo.TagVO;
 import com.fqishappy.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

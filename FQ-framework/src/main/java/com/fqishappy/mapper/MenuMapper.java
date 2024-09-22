@@ -2,6 +2,7 @@ package com.fqishappy.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fqishappy.domain.entity.Menu;
+import org.apache.ibatis.annotations.Delete;
 
 import java.util.List;
 
@@ -31,4 +32,11 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return
      */
     List<Menu> selectOtherRouterMenuTreeByUserId(Long userId);
+
+    /**
+     * 逻辑删除menuId
+     * @param menuId
+     */
+    @Delete("update sys_menu set del_flag = 1 where id = #{menuId}")
+    void deleteMenu(Long menuId);
 }

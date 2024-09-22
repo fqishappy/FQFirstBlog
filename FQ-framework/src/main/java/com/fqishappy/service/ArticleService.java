@@ -3,6 +3,7 @@ package com.fqishappy.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.dto.AddArticleDto;
+import com.fqishappy.domain.dto.UpdateArticleDto;
 import com.fqishappy.domain.entity.Article;
 
 /**
@@ -44,7 +45,7 @@ public interface ArticleService extends IService<Article> {
      * @param id
      * @return
      */
-    ResponseResult delete(Long id);
+    ResponseResult deleteByList(Long id);
 
     /**
      * 添加文章
@@ -52,5 +53,29 @@ public interface ArticleService extends IService<Article> {
      * @return
      */
     ResponseResult add(AddArticleDto article);
+
+    /**
+     * 文章列表模糊查询
+     * @param pageNum
+     * @param pageSize
+     * @param title
+     * @param summary
+     * @return
+     */
+    ResponseResult getList(Integer pageNum, Integer pageSize, String title, String summary);
+
+    /**
+     * 后台查询文章内容详情
+     * @param id
+     * @return
+     */
+    ResponseResult getArticle(Long id);
+
+    /**
+     * 更新关系文章详情
+     * @param article
+     * @return
+     */
+    ResponseResult updateArticle(UpdateArticleDto article);
 }
 

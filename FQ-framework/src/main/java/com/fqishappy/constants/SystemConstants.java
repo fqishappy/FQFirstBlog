@@ -37,4 +37,6 @@ public class SystemConstants {
 
     public static final String NORMAL = "0";
 
+    public static final String IS_ADMIN = "1";
+    public static final Integer LOGIC_DELETE = 1;
 }

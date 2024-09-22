@@ -1,7 +1,9 @@
 package com.fqishappy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Menu;
+import com.fqishappy.domain.vo.MenuVO;
 
 import java.util.List;
 
@@ -25,4 +27,26 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
     List<Menu> selectRouterMenuTreeByUserId(Long userId);
+
+    /**
+     * 获取所有菜单
+     * @param status
+     * @param menuName
+     * @return
+     */
+    ResponseResult getAllMenu(Integer status, String menuName);
+
+    /**
+     * 逻辑删除菜单
+     * @param menuId
+     * @return
+     */
+    ResponseResult deleteMenu(Long menuId);
+
+    /**
+     * 删除菜单-判断是否存在子菜单
+     * @param menuId
+     * @return
+     */
+    boolean hasChild(Long menuId);
 }

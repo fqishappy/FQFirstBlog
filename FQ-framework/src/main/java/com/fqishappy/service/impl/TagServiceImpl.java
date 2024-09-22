@@ -1,8 +1,11 @@
 package com.fqishappy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.dto.TagListDto;
 import com.fqishappy.domain.entity.Tag;
@@ -80,9 +83,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
      */
     @Override
     public ResponseResult deleteTagById(Long tagId) {
-        Tag tag = tagMapper.selectById(tagId);
-        tag.setDelFlag(1);
-        tagMapper.updateById(tag);
+        tagMapper.logicDeleteTag(tagId);
         return ResponseResult.okResult();
     }
 
