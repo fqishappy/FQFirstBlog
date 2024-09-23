@@ -2,8 +2,11 @@ package com.fqishappy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.AddLinkDto;
 import com.fqishappy.domain.entity.Link;
 import com.fqishappy.domain.vo.UpdateLinkVO;
+
+import java.util.List;
 
 /**
  * 友链(Link)表服务接口
@@ -44,8 +47,15 @@ public interface LinkService extends IService<Link> {
 
     /**
      * 逻辑删除友链
-     * @param id
+     * @param ids
      * @return
      */
-    ResponseResult deleteLink(Long id);
+    ResponseResult deleteLink(List<Long> ids);
+
+    /**
+     * 添加友链
+     * @param link
+     * @return
+     */
+    ResponseResult addLink(AddLinkDto link);
 }

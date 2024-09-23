@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.AddLinkDto;
 import com.fqishappy.domain.dto.LinkDto;
 import com.fqishappy.domain.vo.AdminLinkVO;
 import com.fqishappy.domain.vo.LinkVO;
@@ -95,23 +96,26 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     /**
      * 逻辑删除友链
-     * @param id
+     * @param ids
      * @return
      */
     @Override
-    public ResponseResult deleteLink(Long id) {
-        linkMapper.deleteLink(id);
+    public ResponseResult deleteLink(List<Long> ids) {
+        for (Long id : ids) {
+            linkMapper.deleteLink(id);
+        }
         return ResponseResult.okResult();
     }
 
+
     /**
      * 新增友链
-     * @param linkVO
+     * @param link
      * @return
      */
     @PostMapping
-    public ResponseResult addLink(AdminLinkVO linkVO) {
-        linkMapper.insert(BeanCopyUtils.copyBean(linkVO, Link.class));
+    public ResponseResult addLink(AddLinkDto link) {
+        linkMapper.insert(BeanCopyUtils.copyBean(link, Link.class));
         return ResponseResult.okResult();
     }
 }

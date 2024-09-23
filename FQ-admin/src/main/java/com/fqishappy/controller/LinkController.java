@@ -1,16 +1,22 @@
 package com.fqishappy.controller;
 
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.AddLinkDto;
 import com.fqishappy.domain.vo.UpdateLinkVO;
 import com.fqishappy.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author fqishappy
  * @date 2024/9/23 16:20
  */
-@RestController("/content/link")
+@RestController
+@RequestMapping("/content/link")
 public class LinkController {
 
     @Autowired
@@ -54,12 +60,21 @@ public class LinkController {
 
     /**
      * 逻辑删除友链
-     * @param id
+     * @param ids
      * @return
      */
-    @DeleteMapping("/{id}")
-    public ResponseResult deleteLink(@PathVariable Long id) {
-        return linkService.deleteLink(id);
+    @DeleteMapping
+    public ResponseResult deleteLink(@RequestParam String ids) {
+        String[] splits = ids.split(",");
+        List<Long> collect = Arrays.stream(splits).map(Long::valueOf).collect(Collectors.toList());
+
+        return linkService.deleteLink(collect);
+    }
+
+
+    @PostMapping
+    public ResponseResult addLink(@RequestBody AddLinkDto link) {
+        return linkService.addLink(link);
     }
 }
 
