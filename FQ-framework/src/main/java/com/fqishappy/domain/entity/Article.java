@@ -68,6 +68,7 @@ public class Article {
      */
     private String isComment;
 
+
     private Long createBy;
 
     private Date createTime;

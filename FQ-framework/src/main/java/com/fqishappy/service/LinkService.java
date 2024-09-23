@@ -3,6 +3,7 @@ package com.fqishappy.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Link;
+import com.fqishappy.domain.vo.UpdateLinkVO;
 
 /**
  * 友链(Link)表服务接口
@@ -16,4 +17,35 @@ public interface LinkService extends IService<Link> {
      * @return
      */
     ResponseResult getAllLink();
+
+    /**
+     * 后台分页模糊查询友链名
+     * @param pageNum
+     * @param pageSize
+     * @param name
+     * @param status
+     * @return
+     */
+    ResponseResult getLinkList(Integer pageNum, Integer pageSize, String name, String status);
+
+    /**
+     * 后台修改友链时回显友链信息
+     * @param id
+     * @return
+     */
+    ResponseResult getLink(Long id);
+
+    /**
+     * 更新友链信息
+     * @param link
+     * @return
+     */
+    ResponseResult updateLink(UpdateLinkVO link);
+
+    /**
+     * 逻辑删除友链
+     * @param id
+     * @return
+     */
+    ResponseResult deleteLink(Long id);
 }

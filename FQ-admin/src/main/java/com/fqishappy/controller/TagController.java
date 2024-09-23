@@ -1,6 +1,7 @@
 package com.fqishappy.controller;
 
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.TagDto;
 import com.fqishappy.domain.dto.TagListDto;
 import com.fqishappy.domain.vo.TagAddVO;
 import com.fqishappy.domain.vo.TagVO;
@@ -78,13 +79,12 @@ public class TagController {
     /**
      * 根据标签id修改标签
      *
-     * @param tagAddVO
-     * @param id
+     * @param tagDto
      * @return
      */
-    @PutMapping("/{id}")
-    public ResponseResult updateTagById(@PathVariable Long id, @RequestBody TagAddVO tagAddVO) {
-        return tagService.updateTagById(id, tagAddVO);
+    @PutMapping
+    public ResponseResult updateTagById(@RequestBody TagDto tagDto) {
+        return tagService.updateTagById(tagDto);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.fqishappy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.TagDto;
 import com.fqishappy.domain.dto.TagListDto;
 import com.fqishappy.domain.entity.Tag;
 import com.fqishappy.domain.vo.PageVO;
@@ -42,10 +43,10 @@ public interface TagService extends IService<Tag> {
 
     /**
      * 根据标签id修改标签
-     * @param tagId
+     * @param tagDto
      * @return
      */
-    ResponseResult updateTagById(Long tagId, TagAddVO tagAddVO);
+    ResponseResult updateTagById(TagDto tagDto);
 
     /**
      * 根据标签id查询标签

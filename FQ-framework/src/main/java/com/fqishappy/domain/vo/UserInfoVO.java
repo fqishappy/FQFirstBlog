@@ -21,4 +21,5 @@ public class UserInfoVO {
     private String avatar;
     private String sex;
     private String email;
+    private String status;
 }

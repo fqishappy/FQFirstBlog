@@ -89,4 +89,13 @@ public class RoleController {
         }
         return ResponseResult.okResult();
     }
+
+    /**
+     * 查询所有状态正常的角色
+     * @return
+     */
+    @GetMapping("/listAllRole")
+    public ResponseResult getAllRole() {
+        return roleService.getAllRole();
+    }
 }

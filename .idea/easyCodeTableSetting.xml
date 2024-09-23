@@ -441,6 +441,37 @@
             </TableInfoDTO>
           </value>
         </entry>
+        <entry key="fq_blog.sys_user_role">
+          <value>
+            <TableInfoDTO>
+              <option name="comment" value="用户和角色关联表" />
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="用户ID" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="userId" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="角色ID" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="roleId" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="SysUserRole" />
+              <option name="preName" value="sys_" />
+              <option name="saveModelName" value="FQ-framework" />
+              <option name="savePackageName" value="com.fqishappy" />
+              <option name="savePath" value="./FQ-framework/src/main/java/com/fqishappy" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

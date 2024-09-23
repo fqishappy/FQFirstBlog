@@ -10,6 +10,7 @@ import com.fqishappy.domain.dto.UpdateRoleDto;
 import com.fqishappy.domain.entity.Role;
 import com.fqishappy.domain.entity.RoleMenu;
 import com.fqishappy.domain.vo.PageVO;
+import com.fqishappy.domain.vo.RoleListVO;
 import com.fqishappy.domain.vo.RoleVO;
 import com.fqishappy.domain.vo.UpdateRoleVO;
 import com.fqishappy.mapper.RoleMapper;
@@ -161,6 +162,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public void deleteById(Long id) {
         roleMapper.deleteByIdLogic(id);
+    }
+
+    /**
+     * 查询所有状态正常的角色
+     * @return
+     */
+    @Override
+    public ResponseResult getAllRole() {
+        List<Role> list = list();
+        return ResponseResult.okResult(BeanCopyUtils.copyBeanList(list, RoleListVO.class));
     }
 
 

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.TagDto;
 import com.fqishappy.domain.dto.TagListDto;
 import com.fqishappy.domain.entity.Tag;
 import com.fqishappy.domain.vo.PageVO;
@@ -88,17 +89,13 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     }
 
     /**
-     * 更新
-     * @param tagId
-     * @param tagAddVO
+     * 更新标签
+     * @param tagDto
      * @return
      */
     @Override
-    public ResponseResult updateTagById(Long tagId, TagAddVO tagAddVO) {
-        Tag tag = getById(tagId);
-        BeanUtils.copyProperties(tag, tagAddVO);
-        tag.setUpdateBy(SecurityUtils.getUserId());
-        tag.setUpdateTime(new Date());
+    public ResponseResult updateTagById(TagDto tagDto) {
+        Tag tag = BeanCopyUtils.copyBean(tagDto, Tag.class);
         tagMapper.updateById(tag);
         return ResponseResult.okResult();
     }
