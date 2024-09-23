@@ -22,7 +22,7 @@ public class CategoryController {
      * 获取文章分类列表
      * @return
      */
-    @GetMapping("getCategoryList")
+    @GetMapping("/getCategoryList")
     public ResponseResult getCategoryList(){
         return categoryService.getCategoryList();
     }

@@ -41,7 +41,9 @@ public class ArticleController {
      * @return
      */
     @GetMapping("/articleList")
-    public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+    public ResponseResult articleList(@RequestParam Integer pageNum,
+                                      @RequestParam Integer pageSize,
+                                      @RequestParam Long categoryId) {
         return articleService.articleList(pageNum, pageSize, categoryId);
     }
 
