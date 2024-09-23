@@ -45,7 +45,7 @@ public interface ArticleService extends IService<Article> {
      * @param id
      * @return
      */
-    ResponseResult deleteByList(Long id);
+    ResponseResult deleteById(Long id);
 
     /**
      * 添加文章

@@ -2,6 +2,7 @@ package com.fqishappy.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fqishappy.domain.entity.Role;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,4 +19,19 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @return
      */
     List<String> selectRoleKeyByOtherUserId(Long id);
+
+    /**
+     * 改变角色状态
+     * @param roleId
+     * @param status
+     */
+    @Update("update sys_role set status = #{status} where id = #{roleId} ")
+    void updateRoleStatus(Long roleId, String status);
+
+    /**
+     * 逻辑删除角色
+     * @param id
+     */
+    @Update("update sys_role set del_flag = 1 where id = #{id} ")
+    void deleteByIdLogic(Long id);
 }

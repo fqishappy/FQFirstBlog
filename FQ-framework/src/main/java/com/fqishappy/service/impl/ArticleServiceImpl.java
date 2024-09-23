@@ -176,7 +176,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @return
      */
     @Override
-    public ResponseResult deleteByList(Long id) {
+    public ResponseResult deleteById(Long id) {
         articleMapper.deleteArticle(id);
         return ResponseResult.okResult();
     }

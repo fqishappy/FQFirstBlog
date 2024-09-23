@@ -3,6 +3,7 @@ package com.fqishappy.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Menu;
+import com.fqishappy.domain.vo.MenuTreeVO;
 import com.fqishappy.domain.vo.MenuVO;
 
 import java.util.List;
@@ -49,4 +50,17 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
     boolean hasChild(Long menuId);
+
+    /**
+     * 获取菜单树接口
+     * @return
+     */
+    List<MenuTreeVO> treeSelect();
+
+    /**
+     * 查询角色菜单列表树
+     * @param id
+     * @return
+     */
+    ResponseResult getRoleMenuTreeSelect(Long id);
 }

@@ -1,16 +1,11 @@
 package com.fqishappy.controller;
 
-import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.dto.AddArticleDto;
 import com.fqishappy.domain.dto.UpdateArticleDto;
-import com.fqishappy.domain.entity.Article;
 import com.fqishappy.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author fqishappy
@@ -77,7 +72,7 @@ public class ArticleController {
     public ResponseResult deleteByList(@RequestParam String ids) {
         String[] split = ids.split(",");
         for (String s : split) {
-            articleService.deleteByList(Long.valueOf(s));
+            articleService.deleteById(Long.valueOf(s));
         }
         return ResponseResult.okResult();
     }

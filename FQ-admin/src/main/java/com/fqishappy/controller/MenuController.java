@@ -72,4 +72,23 @@ public class MenuController {
         }
         return menuService.deleteMenu(menuId);
     }
+
+    /**
+     * 获取菜单树接口
+     * @return
+     */
+    @GetMapping("/treeselect")
+    public ResponseResult treeSelect(){
+        return ResponseResult.okResult(menuService.treeSelect());
+    }
+
+    /**
+     * 查询角色菜单列表树
+     * @param id
+     * @return
+     */
+    @GetMapping("/roleMenuTreeselect/{id}")
+    public ResponseResult getRoleMenuTreeSelect(@PathVariable Long id) {
+        return menuService.getRoleMenuTreeSelect(id);
+    }
 }

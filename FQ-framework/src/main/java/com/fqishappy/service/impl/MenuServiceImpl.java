@@ -5,15 +5,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.constants.SystemConstants;
 import com.fqishappy.domain.ResponseResult;
 import com.fqishappy.domain.entity.Menu;
-import com.fqishappy.domain.vo.MenuVO;
+import com.fqishappy.domain.entity.RoleMenu;
+import com.fqishappy.domain.vo.MenuTreeVO;
+import com.fqishappy.domain.vo.UpdateMenuTreeVO;
 import com.fqishappy.mapper.MenuMapper;
+import com.fqishappy.mapper.RoleMenuMapper;
 import com.fqishappy.service.MenuService;
+import com.fqishappy.service.RoleMenuService;
 import com.fqishappy.utils.BeanCopyUtils;
-import com.fqishappy.utils.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +29,11 @@ import java.util.stream.Collectors;
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
-    private final MenuMapper menuMapper;
+    @Autowired
+    private MenuMapper menuMapper;
 
-    public MenuServiceImpl(MenuMapper menuMapper) {
-        this.menuMapper = menuMapper;
-    }
+    @Autowired
+    private RoleMenuService roleMenuService;
 
     /**
      * 根据id查询用户权限关键字
@@ -144,4 +147,89 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         queryWrapper.eq(Menu::getParentId,menuId);
         return count(queryWrapper) != 0;
     }
+
+    /**
+     * 获取菜单树接口
+     * @return
+     */
+    @Override
+    public List<MenuTreeVO> treeSelect() {
+        // 查询根菜单
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Menu::getParentId, SystemConstants.ROOT_ROLE);
+        List<Menu> rootMenus = list(queryWrapper);
+
+        // 将根菜单转换为 MenuTreeVO
+        List<MenuTreeVO> menus = BeanCopyUtils.copyBeanList(rootMenus, MenuTreeVO.class);
+
+        // 为每个根菜单递归获取子节点
+        for (MenuTreeVO menu : menus) {
+            List<MenuTreeVO> children = getChildrenRecursively(menu.getId());
+            menu.setChildren(children);
+            menu.setLabel(menu.getMenuName());
+        }
+
+        return menus;
+    }
+
+    /**
+     * 查询角色菜单列表树
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseResult getRoleMenuTreeSelect(Long id) {
+        /*LambdaQueryWrapper<RoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(RoleMenu::getRoleId, id);
+        List<RoleMenu> roleMenus = roleMenuService.list(queryWrapper);
+        List<Menu> menus = new ArrayList<>();
+        for (RoleMenu roleMenu : roleMenus) {
+            menus.add(getById(roleMenu.getMenuId()));
+        }
+        List<MenuTreeVO> menuTreeVOs = BeanCopyUtils.copyBeanList(menus, MenuTreeVO.class);
+        for (MenuTreeVO menuTreeVO : menuTreeVOs) {
+            List<MenuTreeVO> children = getChildrenRecursively(menuTreeVO.getId());
+            menuTreeVO.setChildren(children);
+            menuTreeVO.setLabel(menuTreeVO.getMenuName());
+        }*/
+        LambdaQueryWrapper<RoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(RoleMenu::getRoleId, id);
+        List<RoleMenu> roleMenus = roleMenuService.list(queryWrapper);
+        List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+        List<MenuTreeVO> menuTreeVOs = treeSelect();
+        return ResponseResult.okResult(new UpdateMenuTreeVO(menuTreeVOs, menuIds));
+    }
+
+    /**
+     * 递归获取子菜单，并判断是否为叶子节点
+     * @param parentId
+     * @return
+     */
+    public List<MenuTreeVO> getChildrenRecursively(Long parentId) {
+        // 查询该父节点的所有子菜单
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Menu::getParentId, parentId);
+        List<Menu> menuList = list(queryWrapper);
+
+        // 将查询到的菜单转换为 MenuTreeVO
+        List<MenuTreeVO> children = BeanCopyUtils.copyBeanList(menuList, MenuTreeVO.class);
+
+        // 为每个子菜单递归查找它的子节点
+        for (MenuTreeVO child : children) {
+            List<MenuTreeVO> subChildren = getChildrenRecursively(child.getId());
+
+            // 如果没有子节点，设置 children 为 null 表示这是叶子节点
+            if (subChildren.isEmpty()) {
+                child.setChildren(null); // 叶子节点
+            } else {
+                child.setChildren(subChildren); // 非叶子节点
+            }
+
+            // 设置 label 为 menuName
+            child.setLabel(child.getMenuName());
+        }
+
+        return children;
+    }
+
 }
