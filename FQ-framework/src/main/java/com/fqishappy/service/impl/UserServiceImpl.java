@@ -4,16 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fqishappy.domain.ResponseResult;
-import com.fqishappy.domain.entity.RoleMenu;
+import com.fqishappy.domain.dto.UserStatusDto;
 import com.fqishappy.domain.entity.User;
 import com.fqishappy.domain.entity.UserRole;
 import com.fqishappy.domain.vo.*;
 import com.fqishappy.enums.AppHttpCodeEnum;
 import com.fqishappy.handler.exception.SystemException;
-import com.fqishappy.mapper.RoleMapper;
 import com.fqishappy.mapper.UserMapper;
 import com.fqishappy.mapper.UserRoleMapper;
-import com.fqishappy.service.RoleMenuService;
 import com.fqishappy.service.RoleService;
 import com.fqishappy.service.UserRoleService;
 import com.fqishappy.service.UserService;
@@ -142,11 +140,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!StringUtils.hasText(user.getPassword())) {
             throw new SystemException(AppHttpCodeEnum.PASSWORD_NOT_NULL);
         }
-        if (!StringUtils.hasText(user.getEmail())) {
-            throw new SystemException(AppHttpCodeEnum.EMAIL_NOT_NULL);
-        }
-        if (!StringUtils.hasText(user.getPhonenumber())) {
-            throw new SystemException(AppHttpCodeEnum.PHONENUMBER_NOT_NULL);
+        if (!StringUtils.hasText(user.getNickName())) {
+            throw new SystemException(AppHttpCodeEnum.NICKNAME_NOT_NULL);
         }
         //判断用户传给我们的用户名是否在数据库已经存在。userNameExist方法是下面定义的
         if (userNameExist(user.getUserName())) {
@@ -168,8 +163,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String encode = passwordEncoder.encode(userAdd.getPassword());
         userAdd.setPassword(encode);
         userMapper.insert(userAdd);
+        userRoleBind(user);
         return ResponseResult.okResult();
+    }
 
+    /**
+     * 绑定用户角色
+     * @param user
+     */
+    public void userRoleBind(AddUserVO user) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUserName, user.getUserName());
+        User one = getOne(queryWrapper);
+        Long id = one.getId();
+        List<Long> roleIds = user.getRoleIds();
+        roleIds.stream().map(roleId -> userRoleMapper.insert(new UserRole(id, roleId)));
     }
 
     /**
@@ -226,6 +234,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 userRoleMapper.insert(new UserRole(id, roleId));
             }
         }
+        return ResponseResult.okResult();
+
+    }
+
+    /**
+     * 后台改变用户状态
+     * @param userStatusDto
+     * @return
+     */
+    @Override
+    public ResponseResult changeStatus(UserStatusDto userStatusDto) {
+        User byId = getById(userStatusDto.getUserId());
+        byId.setStatus(userStatusDto.getStatus());
+        userMapper.updateById(byId);
         return ResponseResult.okResult();
 
     }

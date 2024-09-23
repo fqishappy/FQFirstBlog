@@ -82,7 +82,7 @@ public class RoleController {
      * @return
      */
     @DeleteMapping("/{ids}")
-    public ResponseResult deleteByList(@RequestParam String ids) {
+    public ResponseResult deleteByList(@PathVariable String ids) {
         String[] split = ids.split(",");
         for (String s : split) {
             roleService.deleteById(Long.valueOf(s));

@@ -2,6 +2,7 @@ package com.fqishappy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.UserStatusDto;
 import com.fqishappy.domain.entity.User;
 import com.fqishappy.domain.vo.AddUserVO;
 import com.fqishappy.domain.vo.UpdateUserVO;
@@ -71,4 +72,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     ResponseResult updateUser(UpdateUserVO user);
+
+    /**
+     * 后台改变用户状态
+     * @param userStatusDto
+     * @return
+     */
+    ResponseResult changeStatus(UserStatusDto userStatusDto);
 }

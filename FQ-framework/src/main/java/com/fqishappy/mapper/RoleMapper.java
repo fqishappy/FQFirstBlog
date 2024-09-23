@@ -21,14 +21,6 @@ public interface RoleMapper extends BaseMapper<Role> {
     List<String> selectRoleKeyByOtherUserId(Long id);
 
     /**
-     * 改变角色状态
-     * @param roleId
-     * @param status
-     */
-    @Update("update sys_role set status = #{status} where id = #{roleId} ")
-    void updateRoleStatus(Long roleId, String status);
-
-    /**
      * 逻辑删除角色
      * @param id
      */

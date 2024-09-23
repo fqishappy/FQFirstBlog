@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AddUserVO {
     private String userName;
-    private String niceName;
+    private String nickName;
     private String password;
     private String phonenumber;
     private String email;

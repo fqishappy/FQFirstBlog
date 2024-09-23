@@ -87,9 +87,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
      */
     @Override
     public ResponseResult updateRoleStatus(RoleStatusDto roleStatusDto) {
-        roleMapper.updateRoleStatus(roleStatusDto.getRoleId(), roleStatusDto.getStatus());
+        Role byId = getById(roleStatusDto.getRoleId());
+        byId.setStatus(roleStatusDto.getStatus());
+        roleMapper.updateById(byId);
         return ResponseResult.okResult();
-
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.fqishappy.controller;
 
 import com.fqishappy.domain.ResponseResult;
+import com.fqishappy.domain.dto.UserStatusDto;
 import com.fqishappy.domain.vo.AddUserVO;
 import com.fqishappy.domain.vo.UpdateUserVO;
 import com.fqishappy.service.UserService;
@@ -73,5 +74,15 @@ public class UserController {
     @PutMapping
     public ResponseResult updateUser(@RequestBody UpdateUserVO user) {
         return userService.updateUser(user);
+    }
+
+    /**
+     * 后台改变用户状态
+     * @param userStatusDto
+     * @return
+     */
+    @PutMapping("/changeStatus")
+    public ResponseResult changeStatus(@RequestBody UserStatusDto userStatusDto) {
+        return userService.changeStatus(userStatusDto);
     }
 }
